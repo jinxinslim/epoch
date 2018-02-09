@@ -81,8 +81,8 @@ references:
 
 jobs:
   build:
+    resource_class: xlarge
     <<: *container_config
-    resource_class: small
     steps:
       - checkout
       - *restore_rebar_cache
@@ -102,8 +102,8 @@ jobs:
             - .cache/rebar3
 
   test:
+    resource_class: xlarge
     <<: *container_config
-    resource_class: small
     steps:
       - checkout
       - *restore_rebar_cache
@@ -119,8 +119,8 @@ jobs:
           path: _build/test/logs
 
   eunit:
+    resource_class: xlarge
     <<: *container_config
-    resource_class: small
     steps:
       - checkout
       - *restore_rebar_cache
@@ -132,7 +132,7 @@ jobs:
             make eunit
 
   static_analysis:
-    resource_class: small
+    resource_class: xlarge
     <<: *container_config
     steps:
       - checkout
@@ -156,7 +156,7 @@ jobs:
 
 
   linux_package:
-    resource_class: small
+    resource_class: xlarge
     <<: *container_config
     steps:
       - checkout
@@ -171,7 +171,7 @@ jobs:
             - "*.tar.gz"
 
   osx_package:
-    resource_class: small
+    resource_class: xlarge
     macos:
       xcode: "9.0"
     working_directory: ~/epoch
