@@ -226,11 +226,11 @@ handle_request('CompileContract', Req, _Context) ->
 handle_request('CallContract', Req, _Context) ->
     case Req of
         #{'ContractCallInput' :=
-              #{ <<"code">> := Code
+              #{ <<"abi">> := ABI
+               , <<"code">> := Code
                , <<"function">> := Function
                , <<"arg">> := Argument }}  ->
-            %% TODO: Handle other languages
-            case aect_ring:simple_call(Code, Function, Argument) of
+            case aect_dispatch:call(ABI, Code, Function, Argument) of
                 {ok, Result} ->
                     {200, [], #{ out => Result}};
                 {error, ErrorMsg} ->

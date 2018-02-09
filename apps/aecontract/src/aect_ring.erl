@@ -10,7 +10,6 @@
 -export([ compile/2
         , create_call/3
         , encode_call_data/3
-        , execute_call/2
         , simple_call/3
         ]).
 
@@ -77,7 +76,7 @@ simple_call(Code, Function, Argument) ->
                     , currentNumber => 1
                     , currentTimestamp => 1
                     },
-            case execute_call(Spec, false) of
+            case aect_evm:execute_call(Spec, false) of
                 #{ out := Out } ->
                     {ok, hexstring_encode(Out)};
                 E -> {error, list_to_binary(io_lib:format("~p", [E]))}
@@ -103,59 +102,3 @@ create_call(Contract, Function, Argument) ->
         _ -> Res
     end.
 
--spec execute_call(map(), boolean()) -> map() | {error, term()}.
-execute_call(#{ code := CodeAsHexBinString
-              , address := Address
-              , caller := Caller
-              , data := CallData
-              , gas := Gas
-              , gasPrice := GasPrice
-              , origin := Origin
-              , value := Value
-              , currentCoinbase := CoinBase
-              , currentDifficulty := Diffculty
-              , currentGasLimit := GasLimit
-              , currentNumber := Number
-              , currentTimestamp := TS
-              }, Trace) ->
-    %% TODO: Handle Contract In State.
-    Code = binint_to_bin(CodeAsHexBinString),
-    Spec =
-        #{ exec => #{ code => Code
-                    , address => Address
-                    , caller => Caller
-                    , data => CallData
-                    , gas => Gas
-                    , gasPrice => GasPrice
-                    , origin => Origin
-                    , value => Value
-                    },
-           env => #{ currentCoinbase => CoinBase
-                   , currentDifficulty => Diffculty
-                   , currentGasLimit => GasLimit
-                   , currentNumber => Number
-                   , currentTimestamp => TS
-                   },
-           pre => #{}},
-    TraceSpec =
-        #{ trace_fun =>
-               fun(S,A) -> io_lib:format(S,A) end
-         , trace => Trace
-         },
-    State = aevm_eeevm_state:init(Spec, TraceSpec),
-    Result = aevm_eeevm:eval(State),
-    Result.
-
-binint_to_bin(<<"0x", Bin/binary>>) ->
-    << <<(hex_to_int(X)):4>> || <<X:8>> <= Bin>>;
-binint_to_bin(<<"0", _/binary>> = Bin) ->
-    %% Don't know what to do.
-    %% Is this an attempt to pad?
-    error({unexpected, Bin});
-binint_to_bin(Bin) when is_binary(Bin) ->
-    Int = binary_to_integer(Bin),
-    binary:encode_unsigned(Int).
-
-hex_to_int(X) when $A =< X, X =< $F -> 10 + X - $A;
-hex_to_int(X) when $a =< X, X =< $f -> 10 + X - $a;
-hex_to_int(X) when $0 =< X, X =< $9 -> X - $0.

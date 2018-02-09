@@ -2003,6 +2003,8 @@ definitions:
   ContractCallInput:
     type: object
     properties:
+      abi:
+        type: string
       code:
         type: string
       function:
