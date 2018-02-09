@@ -81,7 +81,7 @@ references:
 
 jobs:
   build:
-    resource_class: xlarge
+    resource_class: large
     <<: *container_config
     steps:
       - setup_remote_docker
@@ -103,7 +103,7 @@ jobs:
             - .cache/rebar3
 
   test:
-    resource_class: xlarge
+    resource_class: large
     <<: *container_config
     steps:
       - setup_remote_docker
@@ -121,7 +121,7 @@ jobs:
           path: _build/test/logs
 
   eunit:
-    resource_class: xlarge
+    resource_class: large
     <<: *container_config
     steps:
       - checkout
@@ -134,7 +134,7 @@ jobs:
             make eunit
 
   static_analysis:
-    resource_class: xlarge
+    resource_class: large
     <<: *container_config
     steps:
       - setup_remote_docker
@@ -159,7 +159,7 @@ jobs:
 
 
   linux_package:
-    resource_class: xlarge
+    resource_class: large
     <<: *container_config
     steps:
       - setup_remote_docker
@@ -175,7 +175,7 @@ jobs:
             - "*.tar.gz"
 
   osx_package:
-    resource_class: xlarge
+    resource_class: large
     macos:
       xcode: "9.0"
     working_directory: ~/epoch
