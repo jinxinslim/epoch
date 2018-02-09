@@ -84,7 +84,6 @@ jobs:
     resource_class: large
     <<: *container_config
     steps:
-      - setup_remote_docker
       - checkout
       - *restore_rebar_cache
       - run:
@@ -106,7 +105,6 @@ jobs:
     resource_class: large
     <<: *container_config
     steps:
-      - setup_remote_docker
       - checkout
       - *restore_rebar_cache
       - *restore_build_cache
@@ -137,7 +135,6 @@ jobs:
     resource_class: large
     <<: *container_config
     steps:
-      - setup_remote_docker
       - checkout
       - *restore_rebar_cache
       - *restore_build_cache
@@ -162,7 +159,6 @@ jobs:
     resource_class: large
     <<: *container_config
     steps:
-      - setup_remote_docker
       - checkout
       - run: id
       - *build_package
@@ -180,7 +176,6 @@ jobs:
       xcode: "9.0"
     working_directory: ~/epoch
     steps:
-      - setup_remote_docker
       - checkout
       - run:
           name: Install required tools
