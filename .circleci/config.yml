@@ -103,6 +103,7 @@ jobs:
 
   test:
     <<: *container_config
+    resource_class: xlarge
     steps:
       - checkout
       - *restore_rebar_cache
@@ -130,6 +131,7 @@ jobs:
             make eunit
 
   static_analysis:
+    resource_class: xlarge
     <<: *container_config
     steps:
       - checkout
@@ -151,7 +153,8 @@ jobs:
       - run: make dialyzer
       - run: make swagger-check
 
-  linux_package:
+  linux_package
+    resource_class: xlarge
     <<: *container_config
     steps:
       - checkout
@@ -166,6 +169,7 @@ jobs:
             - "*.tar.gz"
 
   osx_package:
+    resource_class: xlarge
     macos:
       xcode: "9.0"
     working_directory: ~/epoch
