@@ -85,7 +85,6 @@ jobs:
     <<: *container_config
     steps:
       - setup_remote_docker
-          docker_layer_caching: true
       - checkout
       - *restore_rebar_cache
       - run:
@@ -108,7 +107,6 @@ jobs:
     <<: *container_config
     steps:
       - setup_remote_docker
-          docker_layer_caching: true
       - checkout
       - *restore_rebar_cache
       - *restore_build_cache
@@ -140,7 +138,6 @@ jobs:
     <<: *container_config
     steps:
       - setup_remote_docker
-          docker_layer_caching: true
       - checkout
       - *restore_rebar_cache
       - *restore_build_cache
@@ -166,7 +163,6 @@ jobs:
     <<: *container_config
     steps:
       - setup_remote_docker
-          docker_layer_caching: true
       - checkout
       - run: id
       - *build_package
@@ -185,7 +181,6 @@ jobs:
     working_directory: ~/epoch
     steps:
       - setup_remote_docker
-          docker_layer_caching: true
       - checkout
       - run:
           name: Install required tools
