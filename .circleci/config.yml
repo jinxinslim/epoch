@@ -153,7 +153,7 @@ jobs:
       - run: make dialyzer
       - run: make swagger-check
 
-  linux_package
+  linux_package:
     resource_class: xlarge
     <<: *container_config
     steps:
