@@ -82,7 +82,7 @@ references:
 jobs:
   build:
     <<: *container_config
-    resource_class: xlarge
+    resource_class: large
     steps:
       - checkout
       - *restore_rebar_cache
@@ -103,7 +103,7 @@ jobs:
 
   test:
     <<: *container_config
-    resource_class: xlarge
+    resource_class: large
     steps:
       - checkout
       - *restore_rebar_cache
@@ -120,6 +120,7 @@ jobs:
 
   eunit:
     <<: *container_config
+    resource_class: large
     steps:
       - checkout
       - *restore_rebar_cache
@@ -131,7 +132,7 @@ jobs:
             make eunit
 
   static_analysis:
-    resource_class: xlarge
+    resource_class: large
     <<: *container_config
     steps:
       - checkout
@@ -155,7 +156,7 @@ jobs:
 
 
   linux_package:
-    resource_class: xlarge
+    resource_class: large
     <<: *container_config
     steps:
       - checkout
