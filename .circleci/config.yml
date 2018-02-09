@@ -82,6 +82,7 @@ references:
 jobs:
   build:
     <<: *container_config
+    resource_class: xlarge
     steps:
       - checkout
       - *restore_rebar_cache
